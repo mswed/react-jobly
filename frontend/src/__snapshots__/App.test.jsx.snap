@@ -2,6 +2,44 @@
 
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
+  <nav>
+    <a
+      data-discover="true"
+      href="/"
+    >
+      Home
+    </a>
+    <a
+      data-discover="true"
+      href="/companies"
+    >
+      companies
+    </a>
+    <a
+      data-discover="true"
+      href="/jobs"
+    >
+      Jobs
+    </a>
+    <a
+      data-discover="true"
+      href="/login"
+    >
+      Login
+    </a>
+    <a
+      data-discover="true"
+      href="/signup"
+    >
+      Signup
+    </a>
+    <a
+      data-discover="true"
+      href="/profile"
+    >
+      Profile
+    </a>
+  </nav>
   <div>
     <h1>
       Jobly
