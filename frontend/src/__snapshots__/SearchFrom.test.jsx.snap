@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <form>
+    <input
+      name="search"
+      placeholder="Enter search term..."
+      type="text"
+      value=""
+    />
+    <button
+      type="submit"
+    >
+      Search!
+    </button>
+  </form>
+</DocumentFragment>
+`;

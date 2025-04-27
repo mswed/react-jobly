@@ -3,9 +3,19 @@
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
   <div>
-    <div>
-      Search
-    </div>
+    <form>
+      <input
+        name="search"
+        placeholder="Enter search term..."
+        type="text"
+        value=""
+      />
+      <button
+        type="submit"
+      >
+        Search!
+      </button>
+    </form>
     <div />
   </div>
 </DocumentFragment>
