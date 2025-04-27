@@ -16,23 +16,11 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Homepage />} />
-      </Routes>
-      <Routes>
         <Route path="/companies" element={<Companies />} />
-      </Routes>
-      <Routes>
         <Route path="/companies/:name" element={<Company />} />
-      </Routes>
-      <Routes>
         <Route path="/jobs" element={<Jobs />} />
-      </Routes>
-      <Routes>
         <Route path="/login" element={<Login />} />
-      </Routes>
-      <Routes>
         <Route path="/signup" element={<Signup />} />
-      </Routes>
-      <Routes>
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
