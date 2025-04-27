@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import CompanyItem from './CompanyItem.jsx';
 import SearchForm from './SearchForm.jsx';
 import JoblyApi from './api';
@@ -20,7 +21,9 @@ const Companies = () => {
       <SearchForm search={setSearchTerm} />
       <div>
         {companies.map((company) => (
-          <CompanyItem name={company.name} description={company.description} key={company.handle} />
+          <Link to={`/companies/${company.handle}`}>
+            <CompanyItem name={company.name} description={company.description} logo={company.logoUrl} key={company.handle} />
+          </Link>
         ))}
       </div>
     </div>
