@@ -7,24 +7,35 @@ import JoblyApi from './api';
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getCompanies() {
-      const res = await JoblyApi.getCompanies(searchTerm);
-      setCompanies(res.companies);
-      console.log(companies);
+      try {
+        const res = await JoblyApi.getCompanies(searchTerm);
+        setCompanies(res.companies);
+      } catch (error) {
+        console.error('Error fetching companies', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
     getCompanies();
   }, [searchTerm]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <SearchForm search={setSearchTerm} />
       <div>
-        {companies.map((company) => (
-          <Link to={`/companies/${company.handle}`}>
-            <CompanyItem name={company.name} description={company.description} logo={company.logoUrl} key={company.handle} />
-          </Link>
-        ))}
+        {companies &&
+          companies.map((company) => (
+            <Link to={`/companies/${company.handle}`}>
+              <CompanyItem name={company.name} description={company.description} logo={company.logoUrl} key={company.handle} />
+            </Link>
+          ))}
       </div>
     </div>
   );
