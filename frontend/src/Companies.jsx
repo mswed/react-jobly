@@ -1,12 +1,28 @@
 import { useState, useEffect } from 'react';
+import CompanyItem from './CompanyItem.jsx';
+import SearchForm from './SearchForm.jsx';
 import JoblyApi from './api';
 
 const Companies = () => {
-  console.log(JoblyApi.getCompanies());
+  const [companies, setCompanies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    async function getCompanies() {
+      const res = await JoblyApi.getCompanies(searchTerm);
+      setCompanies(res.companies);
+      console.log(companies);
+    }
+    getCompanies();
+  }, [searchTerm]);
   return (
     <div>
-      <div>Search</div>
-      <div>List of Companies</div>
+      <SearchForm search={setSearchTerm} />
+      <div>
+        {companies.map((company) => (
+          <CompanyItem name={company.name} description={company.description} key={company.handle} />
+        ))}
+      </div>
     </div>
   );
 };

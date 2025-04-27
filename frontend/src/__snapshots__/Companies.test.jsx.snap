@@ -6,9 +6,7 @@ exports[`matches snapshot 1`] = `
     <div>
       Search
     </div>
-    <div>
-      List of Companies
-    </div>
+    <div />
   </div>
 </DocumentFragment>
 `;
