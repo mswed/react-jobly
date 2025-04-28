@@ -1,15 +1,35 @@
 import { Link } from 'react-router-dom';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 const NavBar = () => {
   return (
-    <nav>
-      <Link to={'/'}>Home</Link>
-      <Link to={'/companies'}>companies</Link>
-      <Link to={'/jobs'}>Jobs</Link>
-      <Link to={'/login'}>Login</Link>
-      <Link to={'/signup'}>Signup</Link>
-      <Link to={'/profile'}>Profile</Link>
-    </nav>
+    <Navbar bg="light" variant="light" expand="lg" className="w-100">
+      <div className="container-fluid">
+        <Navbar.Brand as={Link} to="/">
+          Jobly
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link as={Link} to={'/companies'}>
+              Companies
+            </Nav.Link>
+            <Nav.Link as={Link} to={'/jobs'}>
+              Jobs
+            </Nav.Link>
+            <Nav.Link as={Link} to={'/login'}>
+              Login
+            </Nav.Link>
+            <Nav.Link as={Link} to={'/signup'}>
+              Signup
+            </Nav.Link>
+            <Nav.Link as={Link} to={'/profile'}>
+              Profile
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </div>
+    </Navbar>
   );
 };
 

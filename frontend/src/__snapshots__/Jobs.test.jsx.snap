@@ -3,7 +3,7 @@
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
   <div>
-    List of all jobs
+    Loading...
   </div>
 </DocumentFragment>
 `;
