@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { Form, Button, InputGroup } from 'react-bootstrap';
 const SearchForm = ({ search }) => {
   const INITIAL_STATE = '';
   const [searchField, setSearchField] = useState(INITIAL_STATE);
@@ -12,10 +12,14 @@ const SearchForm = ({ search }) => {
     setSearchField(INITIAL_STATE);
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="search" placeholder="Enter search term..." onChange={handleChange} value={searchField} />
-      <button type="submit">Search!</button>
-    </form>
+    <Form onSubmit={handleSubmit}>
+      <InputGroup className="m-3">
+        <Form.Control placeholder="Enter search term..." onChange={handleChange} value={searchField} />
+        <Button variant="primary" type="submit">
+          Search!
+        </Button>
+      </InputGroup>
+    </Form>
   );
 };
 

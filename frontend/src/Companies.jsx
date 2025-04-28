@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import CompanyItem from './CompanyItem.jsx';
 import SearchForm from './SearchForm.jsx';
 import JoblyApi from './api';
@@ -27,7 +28,7 @@ const Companies = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div>
+    <Container>
       <SearchForm search={setSearchTerm} />
       <div>
         {companies &&
@@ -37,7 +38,7 @@ const Companies = () => {
             </Link>
           ))}
       </div>
-    </div>
+    </Container>
   );
 };
 
