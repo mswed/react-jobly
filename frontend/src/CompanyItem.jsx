@@ -1,7 +1,7 @@
 import { Card, Row, Col } from 'react-bootstrap';
 const CompanyItem = ({ name, description, logo }) => {
   return (
-    <Card className="mb-3">
+    <Card className="shadow-lg mb-3">
       <Row className="g-0">
         <Col md={8}>
           <Card.Body>

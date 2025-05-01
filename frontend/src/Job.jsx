@@ -1,15 +1,23 @@
+import { Card, Row, Button } from 'react-bootstrap';
 const Job = ({ title, company, salary, equity }) => {
   return (
-    <div>
-      <h5>{title}</h5>
-
-      <p>{company !== undefined ? company : ''}</p>
-      <ul>
-        <li>Salary: {salary}</li>
-        <li>Equity: {equity}</li>
-      </ul>
-      <button>Apply</button>
-    </div>
+    <Card className="mb-3">
+      <Row className="g-0">
+        <Card.Body>
+          <Card.Title>{title}</Card.Title>
+          <Card.Text>
+            <p>{company !== undefined ? company : ''}</p>
+            <ul>
+              <li>Salary: {salary}</li>
+              <li>Equity: {equity}</li>
+            </ul>
+          </Card.Text>
+          <div className="d-flex justify-content-end">
+            <Button variant="warning">Apply</Button>
+          </div>
+        </Card.Body>
+      </Row>
+    </Card>
   );
 };
 

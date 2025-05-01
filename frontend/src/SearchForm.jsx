@@ -13,7 +13,7 @@ const SearchForm = ({ search }) => {
   };
   return (
     <Form onSubmit={handleSubmit}>
-      <InputGroup className="m-3">
+      <InputGroup className="my-3">
         <Form.Control placeholder="Enter search term..." onChange={handleChange} value={searchField} />
         <Button variant="primary" type="submit">
           Search!

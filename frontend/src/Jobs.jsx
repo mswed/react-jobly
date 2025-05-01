@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 import Job from './Job';
 import SearchForm from './SearchForm';
 import JoblyApi from './api';
@@ -26,10 +27,10 @@ const Jobs = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div>
+    <Container>
       <SearchForm search={setSearchTerm} />
       <div>{jobs && jobs.map((job) => <Job title={job.title} company={job.companyName} salary={job.salary} equity={job.equity} key={job.id} />)}</div>
-    </div>
+    </Container>
   );
 };
 

@@ -33,8 +33,8 @@ const Companies = () => {
       <div>
         {companies &&
           companies.map((company) => (
-            <Link to={`/companies/${company.handle}`}>
-              <CompanyItem name={company.name} description={company.description} logo={company.logoUrl} key={company.handle} />
+            <Link to={`/companies/${company.handle}`} key={company.handle} className="text-decoration-none">
+              <CompanyItem name={company.name} description={company.description} logo={company.logoUrl} />
             </Link>
           ))}
       </div>
