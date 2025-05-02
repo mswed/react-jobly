@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import './App.css';
+import { Routes, Route } from 'react-router-dom';
 import Homepage from './Homepage';
 import Companies from './Companies';
 import Company from './Company';
 import Jobs from './Jobs';
 import NavBar from './NavBar';
 import Login from './Login';
-import Signup from './Signup';
+import FormContainer from './FormContainer';
+import SignupForm from './SignupForm';
 import Profile from './Profile';
+import { AuthProvider } from './AuthProvider';
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <NavBar />
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -20,10 +20,10 @@ function App() {
         <Route path="/companies/:name" element={<Company />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<FormContainer title={'Signup'} FormComponent={SignupForm} />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }
 

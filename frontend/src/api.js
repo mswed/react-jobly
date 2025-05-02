@@ -70,13 +70,32 @@ class JoblyApi {
   static async getJobs(q = '') {
     const title = q.length > 0 ? q : undefined;
     let res = await this.request(`jobs/`, { title });
-    console.log('got jobs', res);
     return res;
+  }
+
+  /*
+   ****************************** Authorization Routes **************************************************
+   * */
+
+  /**
+   * Register a user
+   *
+   * @param {String} username - username of new user
+   * @param {String} password - password of new user
+   * @param {String} firstName - first name of new user
+   * @param {String} lastName - last name of new user
+   * @param {String} email - email of new user
+   * @returns {boolean} true if registeration is successful
+   */
+  static async register(username, password, firstName, lastName, email) {
+    let res = await this.request(`auth/register`, { username, password, firstName, lastName, email }, 'post');
+    JoblyApi.token = res.token;
+    return true;
   }
 }
 
 // for now, put token ("testuser" / "password" on class)
-JoblyApi.token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ' + 'SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0.' + 'FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc';
+// JoblyApi.token =
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ' + 'SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0.' + 'FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc';
 
 export default JoblyApi;
