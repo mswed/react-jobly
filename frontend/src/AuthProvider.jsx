@@ -18,8 +18,8 @@ const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const token = await JoblyApi.login(username, password);
-      setToken(token);
+      const authToken = await JoblyApi.login(username, password);
+      setToken(authToken);
       return { success: true };
     } catch (error) {
       return { success: false, error };
@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
   };
 
   // Create the value object
-  const value = { token, register };
+  const value = { token, login, register };
 
   // Wrap everything in the context
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

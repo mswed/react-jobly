@@ -90,7 +90,19 @@ class JoblyApi {
   static async register(username, password, firstName, lastName, email) {
     let res = await this.request(`auth/register`, { username, password, firstName, lastName, email }, 'post');
     JoblyApi.token = res.token;
-    return true;
+    return res.token;
+  }
+
+  /**
+   * Login a user
+   *
+   * @param {String} username - username of new user
+   * @param {String} password - password of new user
+   */
+  static async login(username, password) {
+    let res = await this.request(`auth/token`, { username, password }, 'post');
+    JoblyApi.token = res.token;
+    return res.token;
   }
 }
 
