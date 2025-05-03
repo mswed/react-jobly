@@ -26,7 +26,6 @@ const LoginForm = () => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const res = await login(loginForm.username, loginForm.password);
-    console.log(res);
     if (res.success) {
       navigate('/');
       showMessage('Login Successfull', 'success');

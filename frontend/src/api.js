@@ -139,6 +139,7 @@ class JoblyApi {
    * @returns {boolean} true if registeration is successful
    */
   static async register(username, password, firstName, lastName, email) {
+    console.log('registering', username, password, firstName, lastName, email);
     let res = await this.request(`auth/register`, { username, password, firstName, lastName, email }, 'post');
     JoblyApi.token = res.token;
     return res.token;

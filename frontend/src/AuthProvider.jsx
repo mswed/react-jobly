@@ -40,7 +40,6 @@ const AuthProvider = ({ children }) => {
     if (!token) return;
     async function getUserData() {
       const userData = await JoblyApi.getUser(currentUser);
-      console.log('FETCHED USER DATA', userData);
       setApplications(new Set(userData.applications));
     }
     getUserData();
@@ -61,7 +60,7 @@ const AuthProvider = ({ children }) => {
   const register = async (username, password, firstName, lastName, email) => {
     try {
       const token = await JoblyApi.register(username, password, firstName, lastName, email);
-      setToken(token);
+      logout();
       return { success: true };
     } catch (error) {
       return { success: false, error };

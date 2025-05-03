@@ -1,6 +1,10 @@
 import { Container, Form, Button, Row, Col, Card } from 'react-bootstrap';
 import { useState, useContext } from 'react';
 import { AuthContext } from './AuthProvider';
+import { validateForm } from './utils/formValidation';
+import { MessageContext } from './MessageContext';
+import { useNavigate } from 'react-router-dom';
+
 const SignupForm = () => {
   const INITIAL_STATE = {
     username: '',
@@ -10,9 +14,18 @@ const SignupForm = () => {
     email: '',
   };
 
+  const validations = {
+    username: ['required'],
+    password: ['required'],
+    firstName: ['required'],
+    lastName: ['required'],
+    email: ['required', 'email'],
+  };
   // Get functions from AuthContext
   const { register } = useContext(AuthContext);
+  const { showMessage } = useContext(MessageContext);
 
+  const navigate = useNavigate();
   // Manage the form inputs
   const [signupForm, setSignupForm] = useState(INITIAL_STATE);
 
@@ -23,8 +36,14 @@ const SignupForm = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log('submitting form');
-    await register(signupForm.username, signupForm.password, signupForm.firstName, signupForm.lastName, signupForm.email);
+    const errors = validateForm(signupForm, validations);
+    if (errors.length === 0) {
+      await register(signupForm.username, signupForm.password, signupForm.firstName, signupForm.lastName, signupForm.email);
+      navigate('/');
+      showMessage('You are now registered! Please login!', 'success');
+    } else {
+      showMessage(errors, 'warning');
+    }
   };
   return (
     <Form onSubmit={handleSubmit}>
