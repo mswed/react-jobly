@@ -1,6 +1,7 @@
 import { Container, Form, Button, Row, Col, Card } from 'react-bootstrap';
 import { useState, useContext } from 'react';
 import { AuthContext } from './AuthProvider';
+import { MessageContext } from './MessageContext';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
@@ -12,6 +13,7 @@ const LoginForm = () => {
 
   // Get functions from AuthContext
   const { login } = useContext(AuthContext);
+  const { showMessage } = useContext(MessageContext);
 
   // Manage the form inputs
   const [loginForm, setLoginForm] = useState(INITIAL_STATE);
@@ -26,19 +28,11 @@ const LoginForm = () => {
     const res = await login(loginForm.username, loginForm.password);
     console.log(res);
     if (res.success) {
-      navigate('/', {
-        state: {
-          logoutSuccess: true,
-          message: 'Login Succesfull',
-        },
-      });
+      navigate('/');
+      showMessage('Login Successfull', 'success');
     } else {
-      navigate('/', {
-        state: {
-          showWarning: true,
-          warningMessage: `Login failed. Incorrect username or password!`,
-        },
-      });
+      navigate('/');
+      showMessage('Login Failed! Incorrect username or password!', 'danger');
     }
   };
 

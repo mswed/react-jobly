@@ -2,6 +2,8 @@ import { Form, Button } from 'react-bootstrap';
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from './AuthProvider';
 import JoblyApi from './api';
+import { validateForm } from './utils/formValidation';
+
 const ProfileForm = () => {
   const INITIAL_STATE = {
     firstName: '',
@@ -15,6 +17,11 @@ const ProfileForm = () => {
   // Manage the form inputs
   const [profileForm, setProfileForm] = useState(INITIAL_STATE);
 
+  const validations = {
+    firstName: ['required'],
+    lastName: ['required'],
+    email: ['required'],
+  };
   const handleChange = (evt) => {
     const { name, value } = evt.target;
     setProfileForm((originalData) => ({ ...originalData, [name]: value }));
@@ -22,6 +29,7 @@ const ProfileForm = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    validateForm(profileForm, validations);
     await JoblyApi.updateUser(currentUser, profileForm.firstName, profileForm.lastName, profileForm.email);
   };
 
