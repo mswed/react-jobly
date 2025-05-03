@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import CompanyItem from './CompanyItem.jsx';
 import SearchForm from './SearchForm.jsx';
+import Loading from './Loading.jsx';
 import JoblyApi from './api';
 
 const Companies = () => {
@@ -25,7 +26,7 @@ const Companies = () => {
   }, [searchTerm]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <Container>

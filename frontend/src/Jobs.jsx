@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Container } from 'react-bootstrap';
 import Job from './Job';
 import SearchForm from './SearchForm';
+import Loading from './Loading';
 import JoblyApi from './api';
 import { AuthContext } from './AuthProvider';
 
@@ -28,7 +29,7 @@ const Jobs = () => {
   }, [searchTerm]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <Container>

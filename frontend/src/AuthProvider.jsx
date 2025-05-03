@@ -80,7 +80,6 @@ const AuthProvider = ({ children }) => {
   };
 
   const alreadyApplied = (jobId) => {
-    console.log('checking if', jobId, 'is in', applications);
     return applications.has(jobId);
   };
   // Create the value object

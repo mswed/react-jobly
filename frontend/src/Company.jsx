@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import JoblyApi from './api';
 import { useState, useEffect } from 'react';
 import Job from './Job';
+import Loading from './Loading';
 
 const Company = () => {
   const { name } = useParams();
@@ -24,7 +25,7 @@ const Company = () => {
   }, [name]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <Container>
