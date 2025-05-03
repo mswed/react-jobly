@@ -30,7 +30,7 @@ const Company = () => {
     <Container>
       <h2 className="text-shadow">{companyData.name}</h2>
       <h3 className="text-shadow">{companyData.description}</h3>
-      {companyData.jobs && companyData.jobs.map((job) => <Job title={job.title} salary={job.salary} equity={job.equity} key={job.id} />)}
+      {companyData.jobs && companyData.jobs.map((job) => <Job title={job.title} salary={job.salary} equity={job.equity} jobId={job.id} key={job.id} />)}
     </Container>
   );
 };
