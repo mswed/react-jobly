@@ -43,7 +43,14 @@ function App() {
         />
         <Route path="/login" element={<FormContainer title={'Login'} FormComponent={LoginForm} />} />
         <Route path="/signup" element={<FormContainer title={'Signup'} FormComponent={SignupForm} />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </AuthProvider>
   );

@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }) => {
         to="/"
         state={{
           showWarning: true,
-          warningMessage: `You must be logged in to view ${location} that page`,
+          warningMessage: `You must be logged in to view '${location.pathname}' page`,
         }}
         replace
       />
