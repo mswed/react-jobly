@@ -7,10 +7,12 @@ const Job = ({ title, company, salary, equity }) => {
           <Card.Title>{title}</Card.Title>
           <Card.Text>
             <p>{company !== undefined ? company : ''}</p>
-            <ul>
-              <li>Salary: {salary}</li>
-              <li>Equity: {equity}</li>
-            </ul>
+            <div>
+              <ul>
+                <li>Salary: {salary}</li>
+                <li>Equity: {equity}</li>
+              </ul>
+            </div>
           </Card.Text>
           <div className="d-flex justify-content-end">
             <Button variant="warning">Apply</Button>
