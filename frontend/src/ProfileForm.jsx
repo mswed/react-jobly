@@ -22,13 +22,12 @@ const ProfileForm = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    await register(profileForm.username, profileForm.password, profileForm.firstName, profileForm.lastName, profileForm.email);
+    await JoblyApi.updateUser(currentUser, profileForm.firstName, profileForm.lastName, profileForm.email);
   };
 
   useEffect(() => {
     if (currentUser && token && token.trim !== '') {
       // We only run if we have a token and a user
-      console.log('Fetching with token:', token.substring(0, 20) + '...');
       async function getUser() {
         try {
           const res = await JoblyApi.getUser(currentUser);
@@ -49,7 +48,7 @@ const ProfileForm = () => {
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="username">
         <Form.Label>Username</Form.Label>
-        <Form.Control placeholder="Username" name="username" onChange={handleChange} value={profileForm.username} />
+        <Form.Control placeholder="Username" name="username" value={currentUser} disabled />
       </Form.Group>
       <Form.Group className="mb-3" controlId="first-name">
         <Form.Label>First Name</Form.Label>
