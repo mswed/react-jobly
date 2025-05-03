@@ -5,15 +5,11 @@ const Job = ({ title, company, salary, equity }) => {
       <Row className="g-0">
         <Card.Body>
           <Card.Title>{title}</Card.Title>
-          <Card.Text>
-            <p>{company !== undefined ? company : ''}</p>
-            <div>
-              <ul>
-                <li>Salary: {salary}</li>
-                <li>Equity: {equity}</li>
-              </ul>
-            </div>
-          </Card.Text>
+          {company && <Card.Text>{company}</Card.Text>}
+          <ul>
+            <li>Salary: {salary}</li>
+            <li>Equity: {equity}</li>
+          </ul>
           <div className="d-flex justify-content-end">
             <Button variant="warning">Apply</Button>
           </div>
