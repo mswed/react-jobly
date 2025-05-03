@@ -3,16 +3,18 @@ import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from './AuthProvider';
 import JoblyApi from './api';
 import { validateForm } from './utils/formValidation';
+import { MessageContext } from './MessageContext';
 
 const ProfileForm = () => {
+  // Set up context
+  const { token, currentUser } = useContext(AuthContext);
+  const { showMessage } = useContext(MessageContext);
+
   const INITIAL_STATE = {
     firstName: '',
     lastName: '',
     email: '',
   };
-
-  // Get functions from AuthContext
-  const { token, currentUser } = useContext(AuthContext);
 
   // Manage the form inputs
   const [profileForm, setProfileForm] = useState(INITIAL_STATE);
@@ -20,7 +22,7 @@ const ProfileForm = () => {
   const validations = {
     firstName: ['required'],
     lastName: ['required'],
-    email: ['required'],
+    email: ['required', 'email'],
   };
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -29,8 +31,13 @@ const ProfileForm = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    validateForm(profileForm, validations);
-    await JoblyApi.updateUser(currentUser, profileForm.firstName, profileForm.lastName, profileForm.email);
+    const errors = validateForm(profileForm, validations);
+    if (errors.length === 0) {
+      await JoblyApi.updateUser(currentUser, profileForm.firstName, profileForm.lastName, profileForm.email);
+      showMessage('Updated user profile!', 'success');
+    } else {
+      showMessage(errors, 'warning');
+    }
   };
 
   useEffect(() => {

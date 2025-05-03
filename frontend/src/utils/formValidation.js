@@ -9,9 +9,15 @@ function validateField(field, value, rules = []) {
         return `${field} can not be empty`;
       }
     }
-  }
 
-  const fieldRules = rules[name];
+    // Check email format
+    if (rule === 'email') {
+      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+        return 'Invalid email address';
+      }
+    }
+  }
+  return null;
 }
 
 function validateForm(fields, rules) {
