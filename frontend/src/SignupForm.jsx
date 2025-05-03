@@ -34,7 +34,7 @@ const SignupForm = () => {
       </Form.Group>
       <Form.Group className="mb-3" controlId="password">
         <Form.Label>Password</Form.Label>
-        <Form.Control placeholder="Password" name="password" onChange={handleChange} value={signupForm.password} />
+        <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange} value={signupForm.password} />
       </Form.Group>
       <Form.Group className="mb-3" controlId="first-name">
         <Form.Label>First Name</Form.Label>

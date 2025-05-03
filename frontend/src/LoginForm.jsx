@@ -23,9 +23,22 @@ const LoginForm = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    const success = await login(loginForm.username, loginForm.password);
-    if (success) {
-      navigate('/');
+    const res = await login(loginForm.username, loginForm.password);
+    console.log(res);
+    if (res.success) {
+      navigate('/', {
+        state: {
+          logoutSuccess: true,
+          message: 'Login Succesfull',
+        },
+      });
+    } else {
+      navigate('/', {
+        state: {
+          showWarning: true,
+          warningMessage: `Login failed. Incorrect username or password!`,
+        },
+      });
     }
   };
 
@@ -37,7 +50,7 @@ const LoginForm = () => {
       </Form.Group>
       <Form.Group className="mb-3" controlId="password">
         <Form.Label>Password</Form.Label>
-        <Form.Control placeholder="Password" name="password" onChange={handleChange} value={loginForm.password} />
+        <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange} value={loginForm.password} />
       </Form.Group>
       <Button type="submit" className="w-100">
         Login

@@ -29,7 +29,12 @@ const NavBar = () => {
                 <Nav.Link
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
-                    navigate('/');
+                    navigate('/', {
+                      state: {
+                        logoutSuccess: true,
+                        message: 'You have successfully logged out.',
+                      },
+                    });
                     logout();
                   }}
                 >
