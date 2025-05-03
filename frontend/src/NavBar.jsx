@@ -1,10 +1,11 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { AuthContext } from './AuthProvider';
 
 const NavBar = () => {
-  const { token } = useContext(AuthContext);
+  const { token, currentUser, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   return (
     <Navbar bg="light" variant="light" expand="lg" className="w-100">
       <div className="container-fluid">
@@ -24,6 +25,15 @@ const NavBar = () => {
                 </Nav.Link>
                 <Nav.Link as={Link} to={'/profile'}>
                   Profile
+                </Nav.Link>
+                <Nav.Link
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    logout();
+                    navigate('/');
+                  }}
+                >
+                  Logout ({currentUser})
                 </Nav.Link>
               </>
             ) : (

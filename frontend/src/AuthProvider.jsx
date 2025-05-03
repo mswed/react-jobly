@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import JoblyApi from './api';
 
 // We create the context
@@ -6,6 +7,7 @@ const AuthContext = React.createContext();
 
 // We set up a component to manage the context
 const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentuser] = useState(null);
   // We initialize the token with the value from localStorage
   const [token, setToken] = useState(localStorage.getItem('jobly-token'));
 
@@ -17,9 +19,12 @@ const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (username, password) => {
+    console.log('logging in!!!!');
     try {
       const authToken = await JoblyApi.login(username, password);
       setToken(authToken);
+      const decoded = jwtDecode(authToken);
+      setCurrentuser(decoded.username);
       return { success: true };
     } catch (error) {
       return { success: false, error };
@@ -36,8 +41,11 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    setToken('');
+  };
   // Create the value object
-  const value = { token, login, register };
+  const value = { token, currentUser, login, register, logout };
 
   // Wrap everything in the context
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
