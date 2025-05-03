@@ -35,6 +35,26 @@ class JoblyApi {
 
   // Individual API routes
 
+  /*
+   ****************************** User Routes **************************************************
+   * */
+
+  /**
+   * Get details on a user by username
+   *
+   * @param {String} username - unique usernmae
+   * @returns {Object} found user details
+   */
+
+  static async getUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+
+  /*
+   ****************************** Company Routes **************************************************
+   * */
+
   /**
    * Get details on a company by handle
    *
@@ -59,6 +79,10 @@ class JoblyApi {
     let res = await this.request(`companies/`, { name });
     return res;
   }
+
+  /*
+   ****************************** Company Routes **************************************************
+   * */
 
   /**
    * Get a list of all jobs

@@ -29,8 +29,8 @@ const NavBar = () => {
                 <Nav.Link
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
-                    logout();
                     navigate('/');
+                    logout();
                   }}
                 >
                   Logout ({currentUser})

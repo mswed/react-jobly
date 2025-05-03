@@ -7,15 +7,31 @@ const AuthContext = React.createContext();
 
 // We set up a component to manage the context
 const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentuser] = useState(null);
+  // We grab stuff from local storage if available
+  const storedToken = localStorage.getItem('jobly-token');
+  const storedUser = localStorage.getItem('jobly-user');
+
+  // We set the token right away so we don't run in to authorization issues
+  JoblyApi.token = storedToken || null;
+
   // We initialize the token with the value from localStorage
-  const [token, setToken] = useState(localStorage.getItem('jobly-token'));
+  const [token, setToken] = useState(storedToken);
+  const [currentUser, setCurrentuser] = useState(storedUser);
 
   // Whenever the token changes (login/logout) we need to update
   // both the api module and localStorage
   useEffect(() => {
-    JoblyApi.token = token;
-    localStorage.setItem('jobly-token', token || '');
+    if (token && token.trim !== '') {
+      // We only set the token if it's not empty
+
+      JoblyApi.token = token;
+      localStorage.setItem('jobly-token', token || '');
+      localStorage.setItem('jobly-user', currentUser || '');
+    } else {
+      JoblyApi.token = null;
+      localStorage.removeItem('jobly-token');
+      localStorage.removeItem('jobly-user');
+    }
   }, [token]);
 
   const login = async (username, password) => {

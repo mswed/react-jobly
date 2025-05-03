@@ -4,10 +4,10 @@ import Companies from './Companies';
 import Company from './Company';
 import Jobs from './Jobs';
 import NavBar from './NavBar';
-import LoginForm from './LoginForm';
 import FormContainer from './FormContainer';
 import SignupForm from './SignupForm';
-import Profile from './Profile';
+import LoginForm from './LoginForm';
+import ProfileForm from './ProfileForm';
 import { AuthProvider } from './AuthProvider';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -47,7 +47,7 @@ function App() {
           path="/profile"
           element={
             <ProtectedRoute>
-              <Profile />
+              <FormContainer title={'Profile'} FormComponent={ProfileForm} />
             </ProtectedRoute>
           }
         />
