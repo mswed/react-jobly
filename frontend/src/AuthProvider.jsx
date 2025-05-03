@@ -14,9 +14,10 @@ const AuthProvider = ({ children }) => {
   // We set the token right away so we don't run in to authorization issues
   JoblyApi.token = storedToken || null;
 
-  // We initialize the token with the value from localStorage
+  // Initialize state
   const [token, setToken] = useState(storedToken);
   const [currentUser, setCurrentuser] = useState(storedUser);
+  const [applications, setApplications] = useState(new Set());
 
   // Whenever the token changes (login/logout) we need to update
   // both the api module and localStorage
@@ -34,8 +35,18 @@ const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
+  // We also want to get the user applications here
+  useEffect(() => {
+    if (!token) return;
+    async function getUserData() {
+      const userData = await JoblyApi.getUser(currentUser);
+      console.log('FETCHED USER DATA', userData);
+      setApplications(new Set(userData.applications));
+    }
+    getUserData();
+  }, [token]);
+
   const login = async (username, password) => {
-    console.log('logging in!!!!');
     try {
       const authToken = await JoblyApi.login(username, password);
       setToken(authToken);
@@ -60,8 +71,29 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken('');
   };
+
+  const applyToJob = async (jobId) => {
+    const res = await JoblyApi.applyForJob(currentUser, jobId);
+    if (res) {
+      setApplications((currentApplications) => currentApplications.add(res.applied));
+    }
+  };
+
+  const alreadyApplied = (jobId) => {
+    console.log('checking if', jobId, 'is in', applications);
+    return applications.has(jobId);
+  };
   // Create the value object
-  const value = { token, currentUser, login, register, logout };
+  const value = {
+    token,
+    currentUser,
+    login,
+    register,
+    logout,
+    applications,
+    applyToJob,
+    alreadyApplied,
+  };
 
   // Wrap everything in the context
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -55,12 +55,28 @@ class JoblyApi {
    * Update details of a user by username
    *
    * @param {String} username - unique usernmae
-   * @returns {Object} found user details
+   * @param {String} firstName - User's first name
+   * @param {String} lastName - User's last name
+   * @param {String} email - User's email
+   * @returns {Object} updated user details
    */
 
   static async updateUser(username, firstName, lastName, email) {
     let res = await this.request(`users/${username}`, { firstName, lastName, email }, 'patch');
     return res.user;
+  }
+
+  /**
+   * Apply for a job
+   *
+   * @param {String} username - unique usernmae
+   * @param {Int} jobId - Job id
+   * @returns {Int} applied job id
+   */
+
+  static async applyForJob(username, jobId) {
+    let res = await this.request(`users/${username}/jobs/${jobId}`, { id: jobId }, 'post');
+    return res.applied;
   }
   /*
    ****************************** Company Routes **************************************************
