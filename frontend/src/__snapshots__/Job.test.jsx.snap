@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-3 card"
+  >
+    <div
+      class="g-0 row"
+    >
+      <div
+        class="card-body"
+      >
+        <div
+          class="card-title h5"
+        />
+        <ul>
+          <li>
+            Salary: 
+          </li>
+          <li>
+            Equity: 
+          </li>
+        </ul>
+        <div
+          class="d-flex justify-content-end"
+        >
+          <button
+            class="btn btn-warning"
+            type="button"
+          >
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

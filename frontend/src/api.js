@@ -67,6 +67,18 @@ class JoblyApi {
   }
 
   /**
+   * Delete a user by username
+   *
+   * @param {String} username - unique usernmae
+   * @returns {Object} JSON {deleted: username}
+   */
+
+  static async deleteUser(username) {
+    let res = await this.request(`users/${username}`, {}, 'delete');
+    return res;
+  }
+
+  /**
    * Apply for a job
    *
    * @param {String} username - unique usernmae

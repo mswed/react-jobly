@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    class="w-100 navbar navbar-expand-lg navbar-light bg-light"
+  >
+    <div
+      class="container-fluid"
+    >
+      <a
+        class="navbar-brand"
+        data-discover="true"
+        href="/"
+      >
+        Jobly
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        class="navbar-toggler collapsed"
+        type="button"
+      >
+        <span
+          class="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        class="navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          class="ms-auto navbar-nav"
+        >
+          <a
+            class="nav-link"
+            data-discover="true"
+            href="/login"
+          >
+            Login
+          </a>
+          <a
+            class="nav-link"
+            data-discover="true"
+            href="/signup"
+          >
+            Signup
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</DocumentFragment>
+`;

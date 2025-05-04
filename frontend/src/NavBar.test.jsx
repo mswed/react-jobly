@@ -1,17 +1,16 @@
 import { it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import LoginForm from './LoginForm';
-import { MemoryRouter } from 'react-router-dom';
+import NavBar from './NavBar';
 import { MessagesProvider } from './MessageContext';
 import { AuthProvider } from './AuthProvider';
-import FormContainer from './FormContainer';
+import { MemoryRouter } from 'react-router-dom';
 
 it('renders without crashing', async () => {
   render(
     <MemoryRouter>
       <MessagesProvider>
         <AuthProvider>
-          <FormContainer title={'Login'} FormComponent={LoginForm} />
+          <NavBar />
         </AuthProvider>
       </MessagesProvider>
     </MemoryRouter>
@@ -23,7 +22,7 @@ it('matches snapshot', async () => {
     <MemoryRouter>
       <MessagesProvider>
         <AuthProvider>
-          <FormContainer title={'Login'} FormComponent={LoginForm} />
+          <NavBar />
         </AuthProvider>
       </MessagesProvider>
     </MemoryRouter>
