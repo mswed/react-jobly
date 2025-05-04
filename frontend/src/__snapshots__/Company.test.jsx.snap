@@ -2,8 +2,16 @@
 
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
-  <div>
-    Loading...
+  <div
+    class="d-flex flex-column justify-content-center align-items-center min-vh-100 text-center container"
+    style="margin-top: -5rem;"
+  >
+    <h2
+      class="text-shadow"
+    >
+      Loading...
+    </h2>
+    ;
   </div>
 </DocumentFragment>
 `;

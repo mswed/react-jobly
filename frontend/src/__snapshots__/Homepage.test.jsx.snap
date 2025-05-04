@@ -2,11 +2,18 @@
 
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
-  <div>
-    <h1>
+  <div
+    class="d-flex flex-column justify-content-center align-items-center min-vh-100 text-center container"
+    style="margin-top: -5rem;"
+  >
+    <h1
+      class="text-shadow"
+    >
       Jobly
     </h1>
-    <h2>
+    <h2
+      class="text-shadow"
+    >
       All the jobs in one, convenient place.
     </h2>
   </div>

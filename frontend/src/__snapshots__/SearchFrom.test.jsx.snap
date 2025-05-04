@@ -2,18 +2,24 @@
 
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
-  <form>
-    <input
-      name="search"
-      placeholder="Enter search term..."
-      type="text"
-      value=""
-    />
-    <button
-      type="submit"
+  <form
+    class=""
+  >
+    <div
+      class="my-3 input-group"
     >
-      Search!
-    </button>
+      <input
+        class="form-control"
+        placeholder="Enter search term..."
+        value=""
+      />
+      <button
+        class="btn btn-primary"
+        type="submit"
+      >
+        Search!
+      </button>
+    </div>
   </form>
 </DocumentFragment>
 `;
