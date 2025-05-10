@@ -1,5 +1,5 @@
 import { it, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Homepage from './Homepage';
 
 it('renders without crashing', async () => {
@@ -10,4 +10,9 @@ it('matches snapshot', async () => {
   const { asFragment } = render(<Homepage />);
 
   expect(asFragment()).toMatchSnapshot();
+});
+
+it('displays the correc text', async () => {
+  render(<Homepage />);
+  expect(screen.getByText('All the jobs in one, convenient place.')).toBeInTheDocument();
 });
