@@ -12,7 +12,7 @@ it('matches snapshot', async () => {
   expect(asFragment()).toMatchSnapshot();
 });
 
-it('displays the correc text', async () => {
+it('displays the correct text', async () => {
   render(<Homepage />);
   expect(screen.getByText('All the jobs in one, convenient place.')).toBeInTheDocument();
 });
