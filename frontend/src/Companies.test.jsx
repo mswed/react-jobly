@@ -1,10 +1,9 @@
 import { it, expect, vi, describe, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import Companies from './Companies';
 import { MemoryRouter } from 'react-router-dom';
 import { MessageContext } from './MessageContext';
 import { AuthContext } from './AuthProvider';
-import JoblyApi from './api';
 
 // Mock authentication
 const authValue = {

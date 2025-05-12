@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`matches snapshot 1`] = `
+exports[`Job > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mb-3 card"
@@ -13,13 +13,20 @@ exports[`matches snapshot 1`] = `
       >
         <div
           class="card-title h5"
-        />
+        >
+          A job
+        </div>
+        <p
+          class="card-text"
+        >
+          A company
+        </p>
         <ul>
           <li>
-            Salary: 
+            Salary: 150000
           </li>
           <li>
-            Equity: 
+            Equity: 0.1
           </li>
         </ul>
         <div

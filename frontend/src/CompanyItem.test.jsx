@@ -1,6 +1,6 @@
 import { it, expect, vi, describe, beforeEach } from 'vitest';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import Job from './Job';
+import { render, screen, waitFor } from '@testing-library/react';
+import CompanyItem from './CompanyItem';
 import { MemoryRouter } from 'react-router-dom';
 import { MessageContext } from './MessageContext';
 import { AuthContext } from './AuthProvider';
@@ -11,7 +11,10 @@ const authValue = {
   currentUser: 'testuser',
   logout: vi.fn(),
   applyToJob: vi.fn(),
-  alreadyApplied: vi.fn(),
+  alreadyApplied: vi.fn().mockImplementation((jobId) => {
+    // Mock that job with ID 1 has been applied to
+    return jobId === 1;
+  }),
 };
 
 // Mock the api
@@ -34,7 +37,7 @@ vi.mock('./api', () => ({
 // Mock job functions
 vi.mock('.Job.alreadyApplied', () => vi.fn().mockResolvedValue(False));
 
-describe('Job', () => {
+describe('CompanyItem', () => {
   // Reset all mocks before each test
   beforeEach(() => {
     vi.clearAllMocks();
@@ -45,7 +48,7 @@ describe('Job', () => {
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: vi.fn() }}>
           <AuthContext.Provider value={authValue}>
-            <Job title={'A job'} company={'A company'} salary={150000} equity={0.1} jobId={1} />
+            <CompanyItem name={'Sample Company'} description={'Sample Company Description'} logo={'https://www.logo.com'} />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
@@ -57,7 +60,7 @@ describe('Job', () => {
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: vi.fn() }}>
           <AuthContext.Provider value={authValue}>
-            <Job title={'A job'} company={'A company'} salary={150000} equity={0.1} jobId={1} />
+            <CompanyItem name={'Sample Company'} description={'Sample Company Description'} logo={'https://www.logo.com'} />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
@@ -70,41 +73,16 @@ describe('Job', () => {
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: vi.fn() }}>
           <AuthContext.Provider value={authValue}>
-            <Job title={'A job'} company={'A company'} salary={150000} equity={0.1} jobId={1} />
+            <CompanyItem name={'Sample Company'} description={'Sample Company Description'} logo={'https://www.logo.com'} />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
     );
     // Wait for the companies to load
     await waitFor(() => {
-      expect(screen.getByText('A job')).toBeInTheDocument();
-      expect(screen.getByText('A company')).toBeInTheDocument();
-      expect(screen.getByText('Salary: 150000')).toBeInTheDocument();
-      expect(screen.getByText('Equity: 0.1')).toBeInTheDocument();
-      expect(screen.getByText('Apply')).toBeInTheDocument();
+      expect(screen.getByText('Sample Company')).toBeInTheDocument();
+      expect(screen.getByText('Sample Company Description')).toBeInTheDocument();
+      expect(screen.getByAltText('Logo for Sample Company')).toBeInTheDocument();
     });
-  });
-  it('lets us apply for a job', async () => {
-    authValue.alreadyApplied.mockReturnValue(false);
-    render(
-      <MemoryRouter>
-        <MessageContext.Provider value={{ showMessage: vi.fn() }}>
-          <AuthContext.Provider value={authValue}>
-            <Job title={'A job'} company={'A company'} salary={150000} equity={0.1} jobId={1} />
-          </AuthContext.Provider>
-        </MessageContext.Provider>
-      </MemoryRouter>
-    );
-    const apply = screen.getByText('Apply');
-    expect(apply.className).toEqual('btn btn-warning');
-
-    fireEvent.click(apply);
-
-    await waitFor(() => {
-      expect(apply.className).toEqual('btn btn-primary');
-    });
-
-    // Also verify the applyToJob function was called
-    expect(authValue.applyToJob).toHaveBeenCalledWith(1);
   });
 });
