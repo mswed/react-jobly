@@ -1,23 +1,31 @@
 import { it, expect, vi, describe, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import SignupForm from './SignupForm';
+import ProfileForm from './ProfileForm';
 import { MemoryRouter } from 'react-router-dom';
 import { MessageContext } from './MessageContext';
 import { AuthContext } from './AuthProvider';
+import JoblyApi from './api';
 
-// Mock hook from react-router-dom. First we create a mock version of useNavigate
-const mockNavigate = vi.fn();
-// Then tell vite to intercept the import of react-router-dom and replace the hook with
-// our mocked version
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
-  return {
-    ...actual,
-    useNavigate: () => mockNavigate,
-  };
-});
+// Mock authentication
+const authValue = {
+  token: 'fake-token',
+  currentUser: 'testuser',
+  logout: vi.fn(),
+};
 
-describe('SignupForm', () => {
+// Mock the api
+vi.mock('./api', () => ({
+  default: {
+    getUser: vi.fn().mockResolvedValue({
+      firstName: 'Test',
+      lastName: 'User',
+      email: 'test@example.com',
+    }),
+    updateUser: vi.fn().mockResolvedValue({}),
+  },
+}));
+
+describe('ProfileForm', () => {
   // Reset all mocks before each test
   beforeEach(() => {
     vi.clearAllMocks();
@@ -27,8 +35,8 @@ describe('SignupForm', () => {
     render(
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: vi.fn() }}>
-          <AuthContext.Provider value={{ register: vi.fn() }}>
-            <SignupForm />
+          <AuthContext.Provider value={authValue}>
+            <ProfileForm />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
@@ -39,8 +47,8 @@ describe('SignupForm', () => {
     const { asFragment } = render(
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: vi.fn() }}>
-          <AuthContext.Provider value={{ register: vi.fn() }}>
-            <SignupForm />
+          <AuthContext.Provider value={authValue}>
+            <ProfileForm />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
@@ -52,8 +60,8 @@ describe('SignupForm', () => {
     render(
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: vi.fn() }}>
-          <AuthContext.Provider value={{ register: vi.fn() }}>
-            <SignupForm />
+          <AuthContext.Provider value={authValue}>
+            <ProfileForm />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
@@ -61,146 +69,123 @@ describe('SignupForm', () => {
 
     // Check for form elements
     expect(screen.getByLabelText(/Username/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/First Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Last Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Signup/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Save Changes/i })).toBeInTheDocument();
   });
 
   it('updates form state when typing', () => {
     render(
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: vi.fn() }}>
-          <AuthContext.Provider value={{ register: vi.fn() }}>
-            <SignupForm />
+          <AuthContext.Provider value={authValue}>
+            <ProfileForm />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
     );
 
     // Get form inputs
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
     const firstNameInput = screen.getByLabelText(/First Name/i);
     const lastNameInput = screen.getByLabelText(/Last Name/i);
     const emailInput = screen.getByLabelText(/Email/i);
 
     // Type in inputs
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
     fireEvent.change(firstNameInput, { target: { value: 'Test' } });
     fireEvent.change(lastNameInput, { target: { value: 'User' } });
     fireEvent.change(emailInput, { target: { value: 'test.user@test.com' } });
 
     // Check values were updated
-    expect(usernameInput).toHaveValue('testuser');
-    expect(passwordInput).toHaveValue('password123');
     expect(firstNameInput).toHaveValue('Test');
     expect(lastNameInput).toHaveValue('User');
     expect(emailInput).toHaveValue('test.user@test.com');
   });
 
-  it('calls login with form data on submit', async () => {
+  it('calls updateUser with form data on submit', async () => {
     // Mock functions
-    const mockRegister = vi.fn().mockResolvedValue({ success: true });
+    const mockSubmit = vi.fn().mockResolvedValue({ success: true });
     const mockShowMessage = vi.fn();
 
     render(
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: mockShowMessage }}>
-          <AuthContext.Provider value={{ register: mockRegister }}>
-            <SignupForm />
+          <AuthContext.Provider value={authValue}>
+            <ProfileForm />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
     );
 
     // Get form inputs
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
     const firstNameInput = screen.getByLabelText(/First Name/i);
     const lastNameInput = screen.getByLabelText(/Last Name/i);
     const emailInput = screen.getByLabelText(/Email/i);
 
     // Fill form
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
     fireEvent.change(firstNameInput, { target: { value: 'Test' } });
     fireEvent.change(lastNameInput, { target: { value: 'User' } });
     fireEvent.change(emailInput, { target: { value: 'test.user@test.com' } });
 
     // Submit form
-    fireEvent.click(screen.getByRole('button', { name: /Signup/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Save Changes/i }));
 
     // Check login was called with correct data
     await waitFor(() => {
-      expect(mockRegister).toHaveBeenCalledWith('testuser', 'password123', 'Test', 'User', 'test.user@test.com');
+      expect(JoblyApi.updateUser).toHaveBeenCalledWith('testuser', 'Test', 'User', 'test.user@test.com');
     });
   });
 
-  it('navigates and shows success message on successful registration', async () => {
+  it('shows success message on successful update', async () => {
     // Mock functions for successful login
-    const mockRegister = vi.fn().mockResolvedValue({ success: true });
+    const mockSubmit = vi.fn().mockResolvedValue({ success: true });
     const mockShowMessage = vi.fn();
 
     render(
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: mockShowMessage }}>
-          <AuthContext.Provider value={{ register: mockRegister }}>
-            <SignupForm />
+          <AuthContext.Provider value={authValue}>
+            <ProfileForm />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
     );
 
     // Get form inputs
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
     const firstNameInput = screen.getByLabelText(/First Name/i);
     const lastNameInput = screen.getByLabelText(/Last Name/i);
     const emailInput = screen.getByLabelText(/Email/i);
 
     // Fill form
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
     fireEvent.change(firstNameInput, { target: { value: 'Test' } });
     fireEvent.change(lastNameInput, { target: { value: 'User' } });
     fireEvent.change(emailInput, { target: { value: 'test.user@test.com' } });
 
     // Submit form
-    fireEvent.click(screen.getByRole('button', { name: /Signup/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Save Changes/i }));
 
     // Check results
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/');
-      expect(mockShowMessage).toHaveBeenCalledWith('You are now registered! Please login!', 'success');
+      expect(mockShowMessage).toHaveBeenCalledWith('Updated user profile!', 'success');
     });
   });
 
-  it('shows error message on failed registration', async () => {
+  it('shows error message on failed update', async () => {
     // Mock functions for failed login
-    const mockRegister = vi.fn().mockResolvedValue({ success: false });
+    const mockSubmit = vi.fn().mockResolvedValue({ success: false });
     const mockShowMessage = vi.fn();
 
     render(
       <MemoryRouter>
         <MessageContext.Provider value={{ showMessage: mockShowMessage }}>
-          <AuthContext.Provider value={{ register: mockRegister }}>
-            <SignupForm />
+          <AuthContext.Provider value={authValue}>
+            <ProfileForm />
           </AuthContext.Provider>
         </MessageContext.Provider>
       </MemoryRouter>
     );
 
-    // Fill and submit form
-    fireEvent.change(screen.getByLabelText(/Username/i), {
-      target: { value: 'baduser' },
-    });
-    fireEvent.change(screen.getByLabelText(/Password/i), {
-      target: { value: 'wrongpass' },
-    });
-    fireEvent.click(screen.getByRole('button', { name: /Signup/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Save Changes/i }));
 
     // Check error handling
     await waitFor(() => {

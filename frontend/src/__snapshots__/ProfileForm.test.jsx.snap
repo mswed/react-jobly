@@ -1,0 +1,85 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProfileForm > matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class=""
+  >
+    <div
+      class="mb-3"
+    >
+      <label
+        class="form-label"
+        for="username"
+      >
+        Username
+      </label>
+      <input
+        class="form-control"
+        disabled=""
+        id="username"
+        name="username"
+        placeholder="Username"
+        value="testuser"
+      />
+    </div>
+    <div
+      class="mb-3"
+    >
+      <label
+        class="form-label"
+        for="first-name"
+      >
+        First Name
+      </label>
+      <input
+        class="form-control"
+        id="first-name"
+        name="firstName"
+        placeholder="First Name"
+        value=""
+      />
+    </div>
+    <div
+      class="mb-3"
+    >
+      <label
+        class="form-label"
+        for="last-name"
+      >
+        Last Name
+      </label>
+      <input
+        class="form-control"
+        id="last-name"
+        name="lastName"
+        placeholder="Last Name"
+        value=""
+      />
+    </div>
+    <div
+      class="mb-3"
+    >
+      <label
+        class="form-label"
+        for="email"
+      >
+        Email
+      </label>
+      <input
+        class="form-control"
+        id="email"
+        name="email"
+        placeholder="Email"
+        value=""
+      />
+    </div>
+    <button
+      class="w-100 btn btn-primary"
+      type="submit"
+    >
+      Save Changes
+    </button>
+  </form>
+</DocumentFragment>
+`;

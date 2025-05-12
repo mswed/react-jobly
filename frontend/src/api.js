@@ -103,6 +103,7 @@ class JoblyApi {
 
   static async getCompany(handle) {
     let res = await this.request(`companies/${handle}`);
+    console.log('Returning', res.company);
     return res.company;
   }
 

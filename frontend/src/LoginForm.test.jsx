@@ -35,6 +35,18 @@ describe('LoginForm', () => {
     );
   });
 
+  it('matches snapshot', () => {
+    const { asFragment } = render(
+      <MemoryRouter>
+        <MessageContext.Provider value={{ showMessage: vi.fn() }}>
+          <AuthContext.Provider value={{ login: vi.fn() }}>
+            <LoginForm />
+          </AuthContext.Provider>
+        </MessageContext.Provider>
+      </MemoryRouter>
+    );
+    expect(asFragment()).toMatchSnapshot();
+  });
   it('has username and password inputs and a submit button', () => {
     render(
       <MemoryRouter>

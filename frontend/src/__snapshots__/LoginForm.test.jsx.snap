@@ -1,5 +1,55 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`LoginForm > matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class=""
+  >
+    <div
+      class="mb-3"
+    >
+      <label
+        class="form-label"
+        for="username"
+      >
+        Username
+      </label>
+      <input
+        class="form-control"
+        id="username"
+        name="username"
+        placeholder="Username"
+        value=""
+      />
+    </div>
+    <div
+      class="mb-3"
+    >
+      <label
+        class="form-label"
+        for="password"
+      >
+        Password
+      </label>
+      <input
+        class="form-control"
+        id="password"
+        name="password"
+        placeholder="Password"
+        type="password"
+        value=""
+      />
+    </div>
+    <button
+      class="w-100 btn btn-primary"
+      type="submit"
+    >
+      Login
+    </button>
+  </form>
+</DocumentFragment>
+`;
+
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
   <div
