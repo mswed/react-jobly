@@ -2,6 +2,7 @@ import axios from 'axios';
 import { data } from 'react-router-dom';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:3001';
+console.log('BASE URL IS', BASE_URL);
 
 /** API Class.
  *
